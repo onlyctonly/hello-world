@@ -1,3 +1,4 @@
 #
-#Tue Jan 02 08:53:43 EET 2018
+#Thu Jan 04 03:45:52 EET 2018
 com.jxyu.HomeController=org.springframework.stereotype.Component
+com.jxyu.FormController=org.springframework.stereotype.Component

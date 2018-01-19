@@ -1,7 +1,0 @@
-#
-#Tue Jan 02 08:38:02 EET 2018
-com.jxyu.Config=org.springframework.stereotype.Component
-webapp.HomeController=org.springframework.stereotype.Component
-com.jxyu.HappyFortune=org.springframework.stereotype.Component
-com.jxyu.TennisCoach=org.springframework.stereotype.Component
-com.jxyu.SadFortune=org.springframework.stereotype.Component
