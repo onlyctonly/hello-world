@@ -1,10 +1,10 @@
-package all.dao;
+package all.service;
 
 import java.util.List;
 
 import all.entity.Customer;
 
-public interface CustomerDAO {
+public interface CustomerService {
 	public List<Customer> getCustomers();
 
 	public void saveCustomer(Customer c);
