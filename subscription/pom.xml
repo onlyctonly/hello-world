@@ -85,6 +85,18 @@
 		<version>0.9.5.2</version>
 	</dependency>
 
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>5.2.15.Final</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-orm</artifactId>
+		<version>5.0.2.RELEASE</version>
+	</dependency>
+
 	</dependencies>
 
 	<!-- TO DO: Add support for Maven WAR Plugin -->
@@ -99,7 +111,7 @@
 				    <groupId>org.apache.maven.plugins</groupId>
 				    <artifactId>maven-war-plugin</artifactId>
 				    <version>3.2.0</version>					
-				</plugin>						
+				</plugin>		
 			</plugins>
 		</pluginManagement>
 	</build>

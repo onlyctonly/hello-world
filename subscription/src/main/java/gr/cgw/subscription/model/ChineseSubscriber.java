@@ -1,15 +1,35 @@
 package gr.cgw.subscription.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name="ChineseSubscriber")
 public class ChineseSubscriber {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+	@Column(name="surname")
 	private String surname;
+	@Column(name="lastname")
 	private String lastname;
+	@Column(name="department")
 	private String department;
+	@Column(name="street")
 	private String street;
+	@Column(name="street_number")
 	private String street_number;
+	@Column(name="area")
 	private String area;
+	@Column(name="tk")
 	private String tk;
+	@Column(name="start_date")
 	private String start_date;
+	@Column(name="end_date")
 	private String end_date;
+	@Column(name="copies")
 	private int copies;
 	public ChineseSubscriber(String surname, String lastname, String department, String street, String street_number,
 			String area, String tk, String start_date, String end_date, int copies) {
@@ -84,11 +104,18 @@ public class ChineseSubscriber {
 	public void setCopies(int copies) {
 		this.copies = copies;
 	}
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
-		return "ChineseSubscriber [surname=" + surname + ", lastname=" + lastname + ", department=" + department
-				+ ", street=" + street + ", street_number=" + street_number + ", area=" + area + ", tk=" + tk
-				+ ", start_date=" + start_date + ", end_date=" + end_date + ", copies=" + copies + "]";
+		return "ChineseSubscriber [id=" + id + ", surname=" + surname + ", lastname=" + lastname + ", department="
+				+ department + ", street=" + street + ", street_number=" + street_number + ", area=" + area + ", tk="
+				+ tk + ", start_date=" + start_date + ", end_date=" + end_date + ", copies=" + copies + "]";
 	}
 
 	
