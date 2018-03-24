@@ -1,0 +1,4 @@
+三月 24, 2018 12:52:38 下午 com.jxyu.bridge.App main
+信息: http://www.baidu.com
+三月 24, 2018 12:53:40 下午 com.jxyu.bridge.App main
+信息: http://www.baidu.com
