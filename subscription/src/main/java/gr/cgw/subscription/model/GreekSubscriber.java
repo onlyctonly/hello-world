@@ -8,13 +8,16 @@ import javax.persistence.Id;
 
 @Entity(name="GreekSubscriber")
 public class GreekSubscriber {
+
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	@Column(name="title")
+	private String title;
 	@Column(name="surname")
 	private String surname;
-	@Column(name="lastname")
-	private String lastname;
+	@Column(name="givenname")
+	private String givenname;
 	@Column(name="department")
 	private String department;
 	@Column(name="street")
@@ -31,11 +34,33 @@ public class GreekSubscriber {
 	private String end_date;
 	@Column(name="copies")
 	private int copies;
+	@Column(name="comment")
+	private String comment;
 	
-	public GreekSubscriber(String surname, String lastname, String department, String street, String street_number,
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public GreekSubscriber() {
+	}
+
+	public GreekSubscriber(String surname, String givenname, String department, String street, String street_number,
 			String area, String tk, String start_date, String end_date, int copies) {
 		this.surname = surname;
-		this.lastname = lastname;
+		this.givenname = givenname;
 		this.department = department;
 		this.street = street;
 		this.street_number = street_number;
@@ -54,12 +79,12 @@ public class GreekSubscriber {
 		this.surname = surname;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getGivenname() {
+		return givenname;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setGivenname(String givenname) {
+		this.givenname = givenname;
 	}
 
 	public String getDepartment() {
@@ -136,7 +161,7 @@ public class GreekSubscriber {
 
 	@Override
 	public String toString() {
-		return "GreekSubscriber [id=" + id + ", surname=" + surname + ", lastname=" + lastname + ", department="
+		return "GreekSubscriber [id=" + id + ", surname=" + surname + ", givenname=" + givenname + ", department="
 				+ department + ", street=" + street + ", street_number=" + street_number + ", area=" + area + ", tk="
 				+ tk + ", start_date=" + start_date + ", end_date=" + end_date + ", copies=" + copies + "]";
 	}

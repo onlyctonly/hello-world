@@ -31,6 +31,20 @@ public class ChineseSubscriber {
 	private String end_date;
 	@Column(name="copies")
 	private int copies;
+	@Column(name="comment")
+	private String comment;
+
+	
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
+	
+	public ChineseSubscriber() {
+	}
 	public ChineseSubscriber(String surname, String lastname, String department, String street, String street_number,
 			String area, String tk, String start_date, String end_date, int copies) {
 		this.surname = surname;
