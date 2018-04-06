@@ -21,40 +21,89 @@ public class Main {
 		// mysql
 		Connection conn = null;
 		Statement stmt = null;
+		Statement stmt2 = null;
 		// Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
 		stmt = conn.createStatement();
-		String sql;
-		sql = "SELECT title, givenname, surname,department,street,street_number,area,tk FROM greeksubscriber";
-		ResultSet rs = stmt.executeQuery(sql);
+		stmt2 = conn.createStatement();
+
+		String sql = "SELECT * FROM greeksubscriber";
+		
+		String sql2 = "select found_rows()";
+
+		
 		
 		File file = new File("template.doc");
-		InputStream fs = new FileInputStream(file);
-		HWPFDocument doc2 = new HWPFDocument(fs);
+
 		
-		while (rs.next()) {
-			String title = rs.getString("title");
-			String surname = rs.getString("surname");
-			String givenname = rs.getString("givenname");
-			String department = rs.getString("department");
-			String street = rs.getString("street");
-			String no = rs.getString("street_number");
-			String area = rs.getString("area");
-			String tk = rs.getString("tk");
-			String total = title + " " + givenname + " " + surname + "\n" + department + ", " + street + " " + no + ", "
-					+ area + ", " + tk;
-			doc2.getRange().replaceText("${1}", total);
+		ResultSet rs = stmt.executeQuery(sql);
+		ResultSet rs2=stmt2.executeQuery(sql2);
+		
+		//get total pages
+		rs2.next();
+		int totalRows = rs2.getInt(1);
+		int pages = 0;
+		if ( totalRows%40 != 0 ) {
+			pages = Math.floorDiv(totalRows, 40)+1;
+		}else {
+			pages = totalRows/40;
 		}
+		
+		for (int j = 0; j < pages; j++) {
+			//create page
+			InputStream fs = new FileInputStream(file);
+			HWPFDocument doc2 = new HWPFDocument(fs);
+			//select rows
+			Statement stat3 = conn.createStatement();
+			String sql3= "SELECT title, givenname, surname,department,street,street_number,area,tk,copies,city FROM greeksubscriber "
+					+ "limit " + j*40 + ", 40";
+			ResultSet rs3 = stat3.executeQuery(sql3);
+			//start replacing
+			int i =1;
+			while (rs3.next()) {
+				
+				String title = rs3.getString("title");
+				String surname = rs3.getString("surname");
+				String givenname = rs3.getString("givenname");
+				String department = rs3.getString("department");
+				String street = rs3.getString("street");
+				String no = rs3.getString("street_number");
+				String area = rs3.getString("area");
+				String tk = rs3.getString("tk");
+				String copies = rs3.getString("copies");
+				String city = rs3.getString("city");
+
+				
+				String total = title + " " + givenname + " " + surname + ", " + department + ", " + street + " " + no + ", "
+						+ area + ", "+ city+" " + tk + ","+ copies;
+				doc2.getRange().replaceText("${"+i+"}", total);
+				doc2.getRange().replaceText("null", "");
+				doc2.getRange().replaceText(",,", ",");
+				doc2.getRange().replaceText(", ,", ",");
+				i=i+1;
+			}
+			doc2.write(new File(j+1+".doc"));
+			doc2.close();
+			rs3.close();
+			stat3.close();
+		}
+		
+		
+		
+	
 		rs.close();
+		rs2.close();
+		
 		stmt.close();
+		stmt2.close();
+		
 		conn.close();
 		System.out.println("Goodbye!");
 
 		// open a file
 
-		doc2.write(new File("2.doc"));
-		doc2.close();
+
 	}
 
 }

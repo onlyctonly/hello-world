@@ -33,9 +33,11 @@ public class GreekSubscriber {
 	@Column(name="end_date")
 	private String end_date;
 	@Column(name="copies")
-	private int copies;
+	private String copies;
 	@Column(name="comment")
 	private String comment;
+	@Column(name="city")
+	private String city;
 	
 	
 	public String getTitle() {
@@ -58,7 +60,7 @@ public class GreekSubscriber {
 	}
 
 	public GreekSubscriber(String surname, String givenname, String department, String street, String street_number,
-			String area, String tk, String start_date, String end_date, int copies) {
+			String area, String tk, String start_date, String end_date, String copies, String city) {
 		this.surname = surname;
 		this.givenname = givenname;
 		this.department = department;
@@ -69,6 +71,7 @@ public class GreekSubscriber {
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.copies = copies;
+		this.city=city;
 	}
 
 	public String getSurname() {
@@ -143,11 +146,11 @@ public class GreekSubscriber {
 		this.end_date = end_date;
 	}
 
-	public int getCopies() {
+	public String getCopies() {
 		return copies;
 	}
 
-	public void setCopies(int copies) {
+	public void setCopies(String copies) {
 		this.copies = copies;
 	}
 
@@ -159,12 +162,23 @@ public class GreekSubscriber {
 		this.id = id;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 	@Override
 	public String toString() {
-		return "GreekSubscriber [id=" + id + ", surname=" + surname + ", givenname=" + givenname + ", department="
-				+ department + ", street=" + street + ", street_number=" + street_number + ", area=" + area + ", tk="
-				+ tk + ", start_date=" + start_date + ", end_date=" + end_date + ", copies=" + copies + "]";
+		return "GreekSubscriber [id=" + id + ", title=" + title + ", surname=" + surname + ", givenname=" + givenname
+				+ ", department=" + department + ", street=" + street + ", street_number=" + street_number + ", area="
+				+ area + ", tk=" + tk + ", start_date=" + start_date + ", end_date=" + end_date + ", copies=" + copies
+				+ ", comment=" + comment + ", city=" + city + "]";
 	}
+
+	
 	
 	
 	
