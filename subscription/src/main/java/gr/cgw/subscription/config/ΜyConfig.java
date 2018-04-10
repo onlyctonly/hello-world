@@ -1,10 +1,11 @@
 package gr.cgw.subscription.config;
 
 import java.beans.PropertyVetoException;
-import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,20 +14,27 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import gr.cgw.subscription.interceptor.ExecutionInterceptor;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages="gr.cgw.subscription")
 @PropertySource("classpath:persistence-mysql.properties")
-public class ΜyConfig {
+public class ΜyConfig implements WebMvcConfigurer{
 	
 	@Autowired
 	private Environment env;
 	
-	private Logger logger = Logger.getLogger(getClass().getName());
+	@Autowired
+	private ExecutionInterceptor executionInterceptor;
+	
+	private static Logger logger = LoggerFactory.getLogger("Logger");
 	
 	@Bean
 	public ViewResolver viewresolver() {
@@ -64,5 +72,12 @@ public class ΜyConfig {
 		int intprop = Integer.parseInt(sp);
 		return intprop;
 	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(executionInterceptor).addPathPatterns("/greek/list");
+	}
+	
+	
 	
 }
