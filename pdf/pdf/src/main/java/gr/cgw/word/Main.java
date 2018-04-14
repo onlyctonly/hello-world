@@ -1,7 +1,9 @@
 package gr.cgw.word;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +15,7 @@ import org.apache.poi.hwpf.HWPFDocument;
 public class Main {
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost:3306/subscription?useSSL=false";
+	static final String DB_URL = "jdbc:mysql://localhost:3306/?useSSL=false";
 	static final String USER = "root";
 	static final String PASS = "root";
 
@@ -28,7 +30,7 @@ public class Main {
 		stmt = conn.createStatement();
 		stmt2 = conn.createStatement();
 
-		String sql = "SELECT * FROM greeksubscriber";
+		String sql = "SELECT * FROM subscription.greeksubscriber";
 		
 		String sql2 = "select found_rows()";
 
@@ -50,13 +52,16 @@ public class Main {
 			pages = totalRows/40;
 		}
 		
+		//create post code csv
+		BufferedWriter out = new BufferedWriter(new FileWriter("postcodeGR.csv"));
+		
 		for (int j = 0; j < pages; j++) {
 			//create page
 			InputStream fs = new FileInputStream(file);
 			HWPFDocument doc2 = new HWPFDocument(fs);
 			//select rows
 			Statement stat3 = conn.createStatement();
-			String sql3= "SELECT title, givenname, surname,department,street,street_number,area,tk,copies,city FROM greeksubscriber "
+			String sql3= "SELECT title, givenname, surname,department,street,street_number,area,tk,copies,city FROM subscription.greeksubscriber "
 					+ "limit " + j*40 + ", 40";
 			ResultSet rs3 = stat3.executeQuery(sql3);
 			//start replacing
@@ -82,11 +87,22 @@ public class Main {
 				doc2.getRange().replaceText(",,", ",");
 				doc2.getRange().replaceText(", ,", ",");
 				i=i+1;
+				
+				// write post code file
+				StringBuilder sb=new StringBuilder();
+				sb.append("0;");
+				sb.append(tk.substring(3, 8));
+				sb.append(";2;2;4;0;000000;1");
+				sb.append("\r\n");
+				out.write(sb.toString());
+				
 			}
 			doc2.write(new File(j+1+".doc"));
 			doc2.close();
 			rs3.close();
 			stat3.close();
+			
+			
 		}
 		
 		
@@ -99,10 +115,8 @@ public class Main {
 		stmt2.close();
 		
 		conn.close();
+		out.close();
 		System.out.println("Goodbye!");
-
-		// open a file
-
 
 	}
 
