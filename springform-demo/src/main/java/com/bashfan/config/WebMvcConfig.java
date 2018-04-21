@@ -1,8 +1,10 @@
 package com.bashfan.config;
 
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -28,6 +30,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**")
 		.addResourceLocations("/resources/css/");
+	}
+	
+	@Bean(name="fielddata")
+	public PropertiesFactoryBean data() {
+		PropertiesFactoryBean psb = new PropertiesFactoryBean();
+		psb.setLocation(new ClassPathResource("org-fields.properties"));
+		return psb;
 	}
 	
 }
