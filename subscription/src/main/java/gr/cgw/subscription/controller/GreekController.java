@@ -17,6 +17,7 @@ import gr.cgw.subscription.service.GreekSubscriberService;
 @Controller
 @RequestMapping("/greek")
 public class GreekController {
+	
 	@Autowired
 	private GreekSubscriberService greekSubscriberService;
 	

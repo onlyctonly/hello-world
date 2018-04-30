@@ -15,6 +15,11 @@
 	
 	<body>
 		<h1>Subscriptions</h1>
+		
+		<a href="greek/list">Greek List</a>
+		<a href="china/list">China List</a>
+		
+		
 		<form:form action="${pageContext.request.contextPath}/logout" method="POST">
 			<input type="submit" value="logout" />
 		</form:form>
