@@ -1,5 +1,6 @@
 package com.bashfan.jdbcdemo;
 
+import java.io.FileInputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,18 +8,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.Properties;
 
 public class App {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Connection myconn = null;
 		Statement mystate = null;
 		ResultSet myrs = null;
 		PreparedStatement myps = null;
 		CallableStatement mycall = null;
+		Properties prop = new Properties();
+		prop.load(new FileInputStream("src/main/resources/db.properties"));
+		System.out.println(prop.getProperty("url"));
 
 		try {
-			myconn = DriverManager.getConnection("jdbc:mysql://127.0.0.1", "root", "root");
+			myconn = DriverManager.getConnection(prop.getProperty("url"), prop.getProperty("user"), prop.getProperty("passwd"));
 			mystate = myconn.createStatement();
 			myrs = mystate.executeQuery("select * from subscription.GreekSubscriber");
 
