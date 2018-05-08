@@ -22,7 +22,7 @@ public class SpringConfig {
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
-		ds.setJdbcUrl("jdbc:mysql://127.0.0.1:32768/spring_db?useSSL=false");
+		ds.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/spring_db?useSSL=false");
 		ds.setUser("root");
 		ds.setPassword("root");
 		ds.setInitialPoolSize(5);
