@@ -45,7 +45,7 @@ public class App {
 			while (myrs.next()) {
 				System.out.println(myrs.getString("surname") + " " + myrs.getInt(1));
 			}
-
+			//call stored procedure
 			mycall = myconn.prepareCall("call subscription.new_greek(?, ?, ?)");
 			mycall.setString(1, "L");
 			mycall.setString(2, "M");
