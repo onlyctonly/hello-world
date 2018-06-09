@@ -11,9 +11,9 @@ public class App {
             public Integer call() throws Exception {
                 Random random = new Random();
                 int seconds = random.nextInt(4000);
-                if (seconds > 2000) {
-                    throw new IOException("wow");
-                }
+//                if (seconds > 2000) {
+//                    throw new IOException("wow");
+//                }
                 System.out.println("started");
 
                 Thread.sleep(seconds);
@@ -24,7 +24,9 @@ public class App {
 
         executorService.shutdown();
         try {
-            executorService.awaitTermination(5, TimeUnit.SECONDS);
+            while (!executorService.awaitTermination(1, TimeUnit.SECONDS)) { //如果1s时间内已经shutdown，返回true;持续检查是否结束
+                System.out.println("await");
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
