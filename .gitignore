@@ -2,3 +2,4 @@
 *.jar
 /.metadata/
 /.recommenders/
+target/
