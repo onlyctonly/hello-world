@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bashfan.UserMapper.GroupMapper">
+    <parameterMap type="Group" id="parameterGroupMap">
+        <parameter property="id"/>
+        <parameter property="name"/>
+    </parameterMap>
+
+    <insert id="insertGroup" parameterMap="parameterGroupMap">
+        insert into mybatis.groups (`name`) values (#{name})
+    </insert>
+
+
+    <resultMap type="Group" id="resultGroupMap_1">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <collection property="users" column="group_id" select="com.bashfan.UserMapper.UserGroupMapper.getUsersByGroupId" />
+    </resultMap>
+
+    <select id="getGroup" resultMap="resultGroupMap_1" parameterType="int">
+        SELECT * FROM mybatis.`groups`g WHERE g.id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bashfan.UserMapper.PostMapper">
+
+    <!--<resultMap id="resultPostMap" type="Post">-->
+        <!--<result property="post_id" column="post_id"/>-->
+        <!--<result property="userid" column="userid"/>-->
+        <!--<result property="title" column="title"/>-->
+        <!--<result property="contenct" column="content"/>-->
+        <!--<association property="userid" javaType="User">-->
+            <!--<id property="userid" column="userid"/>-->
+            <!--<result property="name" column="name"/>-->
+        <!--</association>-->
+
+    <!--</resultMap>-->
+    <select id="getPosts" resultType="Post">
+        select * from mybatis.post
+    </select>
+
+    <select id="getUser" parameterType="long" resultType="User">
+        select u.* from mybatis.post p
+        join mybatis.users u on u.id=p.userid
+        where p.post_id = #{post_id}
+    </select>
+
+
+</mapper>

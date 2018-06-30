@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bashfan.UserMapper.UserGroupMapper">
+
+    <parameterMap type="UserGroup" id="parameterUserGroupMap">
+        <parameter property="user_id"/>
+        <parameter property="group_id"/>
+    </parameterMap>
+
+    <insert id="insertUserGroup"  parameterMap="parameterUserGroupMap">
+        INSERT INTO user_group VALUES(#{user_Id},#{group_Id})
+    </insert>
+
+    <!-- 根据一个用户组ID,查看这个用户组下的所有用户 -->
+    <resultMap type="User" id="resultUserMap_2">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+    </resultMap>
+
+    <select id="getUsersByGroupId" resultMap="resultUserMap_2" parameterType="int">
+        SELECT u.* from mybatis.users u
+        join mybatis.user_group ug on ug.user_id=u.id
+        where ug.group_id=#{id}
+    </select>
+
+    <!-- 根据一个用户ID,查看这个用户所对应的组-->
+    <resultMap type="Group" id="resultGroupMap_2">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <select id="getGroupsByUserId" resultMap="resultGroupMap_2" parameterType="int">
+        SELECT g.*, ug.user_id
+        FROM mybatis.groups g, mybatis.user_group ug
+        WHERE g.id=ug.group_id AND ug.user_id=#{id}
+    </select>
+
+</mapper>

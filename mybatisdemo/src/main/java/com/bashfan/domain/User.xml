@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bashfan.UserMapper.UserMapper">
+
+    <resultMap id="resultUserMap" type="User">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="department" column="department"/>
+        <result property="website" column="website"/>
+        <collection property="posts" ofType="Post" column="userid">
+            <id property="post_id" column="post_id" javaType="int" jdbcType="INTEGER"/>
+            <result property="title" column="title" javaType="string" jdbcType="VARCHAR"/>
+            <result property="content" column="content" javaType="string" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="resultPostMap" type="Post">
+        <result property="post_id" column="post_id"/>
+        <result property="userid" column="userid"/>
+        <result property="title" column="title"/>
+        <result property="contenct" column="content"/>
+        <association property="userid" javaType="User">
+            <id property="userid" column="userid"/>
+            <result property="name" column="name"/>
+        </association>
+
+    </resultMap>
+
+    <!--<select id="getUser" parameterType="int" resultMap="resultUserMap">-->
+        <!--SELECT * FROM mybatis.users u-->
+        <!--join mybatis.post p on p.userid = u.id-->
+        <!--WHERE u.id = #{id}-->
+    <!--</select>-->
+
+    <select id="getUsers" resultMap="resultUserMap">
+        select * from mybatis.users u
+        left join mybatis.post p on p.userid = u.id
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        insert into mybatis.users (name, department, phone, website) values (#{name},#{department},#{phone},#{website})
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update mybatis.users set name=#{name},department=#{department},phone=#{phone},website=#{website} where id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from mybatis.users where id=#{id}
+    </delete>
+
+    <!--groups-->
+    <resultMap type="User" id="resultUser">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <collection property="groups" column="user_id" select="com.bashfan.UserMapper.UserGroupMapper.getGroupsByUserId"/>
+    </resultMap>
+
+    <select id="getUser" resultMap="resultUser" parameterType="int">
+        SELECT * FROM mybatis.users WHERE id=#{id}
+    </select>
+</mapper>
