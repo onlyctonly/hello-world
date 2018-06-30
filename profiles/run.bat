@@ -1,1 +1,1 @@
-java -cp target/classes/*;target/* com.bashfan.test.App
+java -cp target/* com.bashfan.test.App
