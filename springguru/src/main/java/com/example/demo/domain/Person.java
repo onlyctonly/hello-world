@@ -10,7 +10,8 @@ public class Person {
     private Long id;
     private String firstname;
     private String lastname;
-
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     public Long getId() {
         return id;
@@ -36,9 +37,18 @@ public class Person {
         this.lastname = lastname;
     }
 
-    public Person(String firstname, String lastname) {
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Person(String firstname, String lastname, Gender gender) {
         this.firstname = firstname;
         this.lastname = lastname;
+        this.gender = gender;
     }
 
     public Person() {
@@ -50,6 +60,7 @@ public class Person {
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
+                ", gender=" + gender +
                 '}';
     }
 }
