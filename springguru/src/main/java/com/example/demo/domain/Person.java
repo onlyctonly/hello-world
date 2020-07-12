@@ -1,6 +1,10 @@
 package com.example.demo.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name ="Person")
@@ -10,8 +14,15 @@ public class Person {
     private Long id;
     private String firstname;
     private String lastname;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
+
+    @CreationTimestamp
+    private Date createdDate;
 
     public Long getId() {
         return id;
@@ -45,13 +56,36 @@ public class Person {
         this.gender = gender;
     }
 
-    public Person(String firstname, String lastname, Gender gender) {
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Person(String firstname, String lastname, Gender gender, Date birthday) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = gender;
+        this.birthday = birthday;
     }
 
     public Person() {
+    }
+
+    public Person(String firstname, String lastname, Date birthday) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthday = birthday;
     }
 
     @Override
@@ -61,6 +95,7 @@ public class Person {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", gender=" + gender +
+                ", birthday=" + birthday +
                 '}';
     }
 }
